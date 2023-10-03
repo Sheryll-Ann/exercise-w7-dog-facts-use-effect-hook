@@ -1,15 +1,48 @@
 // Import required  hooks
+import { useEffect, useState } from "react";
+import { DogFactContainer } from "./components/DogFactContainer";
 import { DogFact } from "./components/DogFact";
 
 export const App = () => {
+
   // Hint: Initialize state for storing the dog fact
+  const [dogFact, setDogFact] = useState(null); //null used as it is interchangeable to any other data type
+
   // Hint: Define the API endpoint
-  // Hint: Create a function to fetch the dog fact
+  const API = "https://dogapi.dog/api/v2/facts";
+
+  // Hint: Create a function (async in nature) to fetch the dog fact
+
+  const fetchDogFact = async () => {
+
+    await fetch(API)
+      .then((notClean) => {
+        console.log(notClean);
+        return notClean.json();
+      })
+      .then((cleanInfo) => {
+        if (cleanInfo.data) {
+          let cleanData = cleanInfo.data;
+
+          let dogInfo = cleanData[0].attributes.body
+
+          setDogFact(dogInfo)
+        }
+      })
+    console.log(cleanInfo)
+      .catch((error) => { console.log(error) })
+  }
   // Hint: Use the useEffect hook to fetch the dog fact when the component mounts
+
+  useEffect(() => {
+    fetchDogFact()
+  }, [])
+
 
   return (
     <div className="App">
-      <DogFact />
+      <DogFactContainer fact={dogFact} />
+      <button onClick={fetchDogFact}>Get another dog fact</button>
     </div>
   );
 };
