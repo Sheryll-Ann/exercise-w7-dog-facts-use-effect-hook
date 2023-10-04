@@ -1,6 +1,6 @@
 // Import required  hooks
 import { useEffect, useState } from "react";
-import { DogFactContainer } from "./components/DogFactContainer";
+// import { DogFactContainer } from "./components/DogFactContainer";
 import { DogFact } from "./components/DogFact";
 
 export const App = () => {
@@ -32,7 +32,7 @@ export const App = () => {
     console.log(cleanInfo)
       .catch((error) => { console.log(error) })
   }
-  // Hint: Use the useEffect hook to fetch the dog fact when the component mounts
+  // Hint: Use the useEffect hook to fetch the dog fact when the component mounts i.e. empty dependency array
 
   useEffect(() => {
     fetchDogFact()
@@ -41,7 +41,9 @@ export const App = () => {
 
   return (
     <div className="App">
-      <DogFactContainer fact={dogFact} />
+      {/* <DogFactContainer fact={dogFact} /> */}
+      {/* Here, the prop from the child ocmponent is passed to the parent component as a key, storing a value in useState method */}
+      <DogFact fact={dogFact} />
       <button onClick={fetchDogFact}>Get another dog fact</button>
     </div>
   );
